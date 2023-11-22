@@ -48,6 +48,7 @@ void Initialize(void)
     row = 0;
     col = 0;
     exitFlag = false;
+    objPos player{9,4,'@'};
 }
 
 void GetInput(void)
@@ -64,8 +65,8 @@ void RunLogic(void)
             } 
             else {
                     frame[row][col] = ' ';
-
             }
+
         }
     }
 }
@@ -75,7 +76,12 @@ void DrawScreen(void)
     MacUILib_clearScreen();    
     for (row = 0; row < length; row++){
         for (col = 0; col < height; col++){
-            MacUILib_printf("%c", frame[row][col]);
+            if ((row == player->x)&&(col == player->y)){
+                MacUILib_printf("%c", player->symbol);
+            }
+            else{
+                MacUILib_printf("%c", frame[row][col]);
+        }
         }
         MacUILib_printf("\n");
     }
