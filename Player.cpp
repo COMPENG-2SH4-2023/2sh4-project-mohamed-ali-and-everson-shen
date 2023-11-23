@@ -6,7 +6,7 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY/2, '*');
+    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
 }
 
 
@@ -20,16 +20,13 @@ Player::~Player()
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos array list
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol)
+    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
 }
 
 void Player::updatePlayerDir()
 {
     char input = mainGameMechsRef->getInput();
         switch (input) {
-            case 27:
-                exitFlag = 1;
-                break;
             case 119: // w
             case 87:
                 if (myDir != DOWN){
