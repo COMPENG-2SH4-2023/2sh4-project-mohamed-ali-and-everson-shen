@@ -103,4 +103,5 @@ void CleanUp(void)
     MacUILib_clearScreen();    
     MacUILib_uninit();
     delete myGM;
+    delete myPlayer;
 }

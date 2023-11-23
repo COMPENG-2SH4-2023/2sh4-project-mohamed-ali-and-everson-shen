@@ -28,6 +28,8 @@ void Player::updatePlayerDir()
     char input = mainGameMechsRef->getInput();
     if (input != 0){
         switch (input) {
+            case 27:
+                mainGameMechsRef->setExitTrue();
             case 119: // w
             case 87:
                 if (myDir != DOWN){
@@ -76,6 +78,20 @@ void Player::movePlayer()
             break;
         default:
             break;
+    }
+
+    if (playerPos.x == 0){
+        playerPos.x = mainGameMechsRef->getBoardSizeX()-2;
+    }
+    else if (playerPos.x == mainGameMechsRef->getBoardSizeX()-1){
+        playerPos.x = 1;
+    }
+
+    if (playerPos.y == 0){
+        playerPos.y = mainGameMechsRef->getBoardSizeY()-2;
+    }
+    else if (playerPos.y == mainGameMechsRef->getBoardSizeY()-1){
+        playerPos.y = 1;
     }
 }
 
