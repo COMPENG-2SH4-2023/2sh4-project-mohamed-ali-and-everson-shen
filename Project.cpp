@@ -118,6 +118,6 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-  
+    delete GameMechsPtr;
     MacUILib_uninit();
 }
