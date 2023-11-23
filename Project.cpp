@@ -1,19 +1,22 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
 
 
 using namespace std;
 
 #define DELAY_CONST 100000
-#define height 10
-#define length 20
+
+GameMechs* myGM;       
 
 bool exitFlag;
 int row;
 int col;
 char frame[height][length];
-objPos player;
+Player myPlayer;
+
 
 void Initialize(void);
 void GetInput(void);
@@ -29,7 +32,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -37,7 +40,7 @@ int main(void)
         LoopDelay();
     }
 
-    CleanUp();
+    CleanUp();  
 
 }
 
@@ -48,17 +51,24 @@ void Initialize(void)
     MacUILib_clearScreen();
     row = 0;
     col = 0;
-    exitFlag = false;
-    player = objPos(length/2-1,height/2-1,'@');
+
+    myGM = new GameMechs(30,15);
+    myPlayer = new Player(myGM);
+    // myPlayer = objPos(length/2-1,height/2-1,'*');
 }
 
 void GetInput(void)
 {
-   
+
 }
 
 void RunLogic(void)
 {
+
+    objPos tempPos;
+    myPlayer.getPlayerPos(tempPos);
+
+    myPlayer->updatePlayerDir();
     for (row = 0; row < height; row++){
         for (col = 0; col < length; col++){
             if (row == 0 || col == 0 || row == height - 1 || col == length - 1) {
@@ -79,17 +89,19 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-    for (row = 0; row < height; row++){
-        for (col = 0; col < length; col++){
-            if ((row == player.y)&&(col == player.x)){
-                MacUILib_printf("%c", player.symbol);
-            }
-            else{
-                MacUILib_printf("%c", frame[row][col]);
-        }
-        }
-        MacUILib_printf("\n");
-    }
+
+    MacUILib_printf("BoardSize: %d%d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol)
+    // for (row = 0; row < height; row++){
+    //     for (col = 0; col < length; col++){
+    //         if ((row == player.y)&&(col == player.x)){
+    //             MacUILib_printf("%c", player.symbol);
+    //         }
+    //         else{
+    //             MacUILib_printf("%c", frame[row][col]);
+    //     }
+    //     }
+    //     MacUILib_printf("\n");
+    // }
 
     //Debugging
     MacUILib_printf("Player coordinate x is: %d\n", player.x);
