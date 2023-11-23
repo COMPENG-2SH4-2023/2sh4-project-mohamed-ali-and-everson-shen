@@ -12,7 +12,8 @@ using namespace std;
 bool exitFlag;
 int row;
 int col;
-char frame[length][height];
+char frame[height][length];
+objPos player;
 
 void Initialize(void);
 void GetInput(void);
@@ -48,7 +49,7 @@ void Initialize(void)
     row = 0;
     col = 0;
     exitFlag = false;
-    objPos player{9,4,'@'};
+    player = objPos(length/2-1,height/2-1,'@');
 }
 
 void GetInput(void)
@@ -58,26 +59,30 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    for (row = 0; row < length; row++){
-        for (col = 0; col < height; col++){
-            if (row == 0 || col == 0 || row == length - 1 || col == length - 1) {
+    for (row = 0; row < height; row++){
+        for (col = 0; col < length; col++){
+            if (row == 0 || col == 0 || row == height - 1 || col == length - 1) {
                 frame[row][col] = '#';
             } 
-            else {
-                    frame[row][col] = ' ';
+            else
+            {
+                frame[row][col] = ' ';
             }
 
         }
     }
+
 }
+
+
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-    for (row = 0; row < length; row++){
-        for (col = 0; col < height; col++){
-            if ((row == player->x)&&(col == player->y)){
-                MacUILib_printf("%c", player->symbol);
+    for (row = 0; row < height; row++){
+        for (col = 0; col < length; col++){
+            if ((row == player.y)&&(col == player.x)){
+                MacUILib_printf("%c", player.symbol);
             }
             else{
                 MacUILib_printf("%c", frame[row][col]);
