@@ -26,6 +26,7 @@ void Player::getPlayerPos(objPos &returnPos)
 void Player::updatePlayerDir()
 {
     char input = mainGameMechsRef->getInput();
+    if (input != 0){
         switch (input) {
             case 119: // w
             case 87:
@@ -55,7 +56,7 @@ void Player::updatePlayerDir()
                 break;
         }
 
-
+    }
 }
 
 void Player::movePlayer()

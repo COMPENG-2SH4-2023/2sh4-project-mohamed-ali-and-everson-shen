@@ -52,7 +52,9 @@ void Initialize(void)
 
 void GetInput(void)
 {
-
+    if (MacUILib_hasChar() != 0){
+        myGM->setInput(MacUILib_getChar());
+    } 
 }
 
 void RunLogic(void)
