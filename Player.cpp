@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
@@ -17,7 +16,8 @@ Player::~Player()
 
 void Player::getPlayerPos(objPos &returnPos)
 {
-    // return the reference to the playerPos arrray list
+    // return the reference to the playerPos array list
+
 }
 
 void Player::updatePlayerDir()

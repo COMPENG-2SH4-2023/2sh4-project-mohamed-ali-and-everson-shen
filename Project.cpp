@@ -91,6 +91,10 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
+    //Debugging
+    MacUILib_printf("Player coordinate x is: %d\n", player.x);
+    MacUILib_printf("Player coordinate y is: %d\n", player.y);
+    MacUILib_printf("Player symbol is: %c\n", player.symbol);
 }
 
 void LoopDelay(void)

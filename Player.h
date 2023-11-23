@@ -8,7 +8,10 @@
 class Player
 {
     // Construct the remaining declaration from the project manual.
-
+    private:
+        objPos playerPos;
+        enum Dir playerDir;
+        GameMechs* gameMecRef;
     // Only some sample members are included here
 
     // You will include more data members and member functions to complete your design.
