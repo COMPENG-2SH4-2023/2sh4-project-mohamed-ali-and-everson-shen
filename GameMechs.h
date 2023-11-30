@@ -45,7 +45,7 @@ class GameMechs
         bool getLoseFlagStatus();
         int getScore();
         void incrementScore();
-        void generateFood(objPos blockOff);
+        void generateFood(objPos blockOff); //upgrade somehow
         void getFoodPos(objPos &returnPos);
       
 

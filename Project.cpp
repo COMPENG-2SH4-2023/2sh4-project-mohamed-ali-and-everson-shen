@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
+#include "objPosArrayList.h"
 
 
 using namespace std;
@@ -47,8 +48,8 @@ void Initialize(void)
 
     myGM = new GameMechs(30,15);
     myPlayer = new Player(myGM);
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
+    objPos tempPos(-1,-1, 'o');
+    //myPlayer->getPlayerPos(tempPos);
     myGM->generateFood(tempPos);
     
 }
@@ -73,20 +74,37 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
+    
+    bool drawStatus;
+
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPos tempBody;
 
     objPos foodPos;
     myGM->getFoodPos(foodPos);
 
     for (int row = 0; row < myGM->getBoardSizeY(); row++){
         for (int col = 0; col < myGM->getBoardSizeX(); col++){
+
+            drawStatus = false;
+            for (int k = 0; k < playerBody->getSize(); k++){
+                playerBody->getElement(tempBody, k);
+                if (tempBody.x == col && tempBody.y == row){
+                    MacUILib_printf("%c", tempBody.symbol);
+                    drawStatus = true;
+                    break;
+                }
+            }
+
+            if(drawStatus) continue;
+
+            
             if (row == 0 || col == 0 || row == ((myGM->getBoardSizeY()) - 1) || col == ((myGM->getBoardSizeX())-1)){
                 MacUILib_printf("#");
             } 
-            else if ((row == tempPos.y) && (col == tempPos.x)){
-                MacUILib_printf("%c", tempPos.symbol);
-            }
+            // else if ((row == tempPos.y) && (col == tempPos.x)){
+            //     MacUILib_printf("%c", tempPos.symbol);
+            // }
             else if ((row == foodPos.y) && (col == foodPos.x)){
                 MacUILib_printf("%c", foodPos.symbol);
             }
@@ -97,8 +115,8 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("BoardSize: %d%d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
-    MacUILib_printf("Food Pos: <%d, %d> + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
+    // MacUILib_printf("BoardSize: %d%d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
+    // MacUILib_printf("Food Pos: <%d, %d> + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
 }
 
 
