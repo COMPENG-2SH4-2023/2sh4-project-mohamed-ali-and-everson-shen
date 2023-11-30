@@ -62,6 +62,7 @@ void RunLogic(void)
 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+    myGM->clearInput();
 }
 
 
