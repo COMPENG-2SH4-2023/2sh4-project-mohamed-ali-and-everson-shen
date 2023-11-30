@@ -47,6 +47,9 @@ void Initialize(void)
 
     myGM = new GameMechs(30,15);
     myPlayer = new Player(myGM);
+    objPos tempPos;
+    myPlayer->getPlayerPos(tempPos);
+    myGM->generateFood(tempPos);
     
 }
 
@@ -73,6 +76,9 @@ void DrawScreen(void)
     objPos tempPos;
     myPlayer->getPlayerPos(tempPos);
 
+    objPos foodPos;
+    myGM->getFoodPos(foodPos);
+
     for (int row = 0; row < myGM->getBoardSizeY(); row++){
         for (int col = 0; col < myGM->getBoardSizeX(); col++){
             if (row == 0 || col == 0 || row == ((myGM->getBoardSizeY()) - 1) || col == ((myGM->getBoardSizeX())-1)){
@@ -81,6 +87,9 @@ void DrawScreen(void)
             else if ((row == tempPos.y) && (col == tempPos.x)){
                 MacUILib_printf("%c", tempPos.symbol);
             }
+            else if ((row == foodPos.y) && (col == foodPos.x)){
+                MacUILib_printf("%c", foodPos.symbol);
+            }
             else{
                 MacUILib_printf(" ");
             }
@@ -88,10 +97,10 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-
     MacUILib_printf("BoardSize: %d%d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
-
+    MacUILib_printf("Food Pos: <%d, %d> + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
 }
+
 
 void LoopDelay(void)
 {
