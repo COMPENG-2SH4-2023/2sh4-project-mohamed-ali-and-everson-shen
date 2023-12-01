@@ -112,7 +112,6 @@ void Player::movePlayer()
 
 if (checkFoodConsumption(currentHead) == true){
     increasePlayerLength(currentHead);
-
 }
 
 
@@ -135,7 +134,7 @@ bool Player::checkFoodConsumption(objPos& head){
 }
 
 void Player::increasePlayerLength(objPos& head){
-    playerPosList->insertTail(head);
+    playerPosList->insertHead(head);
 
 }
 
