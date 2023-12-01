@@ -113,7 +113,13 @@ void Player::movePlayer()
     if (!checkFoodConsumption()){
         playerPosList->removeTail();
     }
+    
+    if (checkSelfCollision()){
+        mainGameMechsRef->setLoseFlag();
+        mainGameMechsRef->setExitTrue();    
+    }
 }
+
 
 bool Player::checkFoodConsumption(){
     objPos foodPosTemp;
@@ -137,7 +143,27 @@ void Player::increasePlayerLength(objPos head){
     // objPos head;
     // playerPosList->getHeadElement(head);
     
-    playerPosList->insertHead(head);
+    playerPosList->insertTail(head);
 
+}
+
+bool Player::checkSelfCollision() {
+    if (playerPosList->getSize() <= 1) {
+        return false;
+    }
+
+    objPos currentHead;
+    objPos currentPos;
+    playerPosList->getHeadElement(currentHead);
+
+    for (int i = 1; i < playerPosList->getSize(); i++) {
+        playerPosList->getElement(currentPos, i);
+
+        if (currentPos.x == currentHead.x && currentPos.y == currentHead.y) {
+            return true;
+        }
+    }
+
+    return false;
 }
 

@@ -78,6 +78,9 @@ void DrawScreen(void)
 
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
+    if(myGM->getLoseFlagStatus()){
+        MacUILib_printf("you lose");
+    }
 
     objPos foodPos;
     myGM->getFoodPos(foodPos);
