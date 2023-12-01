@@ -7,9 +7,11 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
     objPos tempPos;
+    // objPos foodPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
+    // myGM->getFoodPos(foodPos);
 
     
 }
@@ -35,6 +37,7 @@ void Player::updatePlayerDir()
         switch (input) {
             case 27:
                 mainGameMechsRef->setExitTrue();
+                break;
             case 119: // w
             case 87:
                 if (myDir != DOWN){
@@ -71,6 +74,7 @@ void Player::movePlayer()
     objPos currentHead;
     playerPosList->getHeadElement(currentHead);
     
+
     switch(myDir) {
         case UP:
 
@@ -105,7 +109,33 @@ void Player::movePlayer()
 
     playerPosList->insertHead(currentHead);
     playerPosList->removeTail();
+
+if (checkFoodConsumption(currentHead) == true){
+    increasePlayerLength(currentHead);
+
 }
 
 
+}
+
+bool Player::checkFoodConsumption(objPos& head){
+    objPos foodPosTemp;
+    mainGameMechsRef->getFoodPos(foodPosTemp);
+    
+    if (head.x == foodPosTemp.x && head.y == foodPosTemp.y){
+        mainGameMechsRef->incrementScore();
+        mainGameMechsRef->generateFood(head);
+        return true;
+    }
+    else{
+        return false;
+    }
+    
+
+}
+
+void Player::increasePlayerLength(objPos& head){
+    playerPosList->insertHead(head);
+
+}
 
