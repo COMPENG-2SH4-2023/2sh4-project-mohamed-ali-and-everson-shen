@@ -42,6 +42,7 @@ print_ptr MacUILib_printf;
 		// No implementation required
 		MacUILib_printf("\nPress Any Key to Shut Down\n");
 		getchar();
+
 	}
 	
 #endif

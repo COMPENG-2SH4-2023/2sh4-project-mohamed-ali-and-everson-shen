@@ -113,8 +113,8 @@ void Player::movePlayer()
     }
     
     if (checkSelfCollision()){
-        mainGameMechsRef->setLoseFlag();
-        mainGameMechsRef->setExitTrue();    
+        mainGameMechsRef->setLoseFlag();   
+        mainGameMechsRef->setExitTrue(); 
     }
 }
 
