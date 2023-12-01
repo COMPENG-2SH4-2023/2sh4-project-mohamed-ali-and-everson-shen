@@ -1,5 +1,4 @@
 #include "objPosArrayList.h"
-#include <iostream>
 
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
@@ -13,7 +12,7 @@ objPosArrayList::objPosArrayList()
 
 objPosArrayList::~objPosArrayList()
 {
-    delete[] aList;
+    delete [] aList;
 }
 
 int objPosArrayList::getSize()
@@ -23,22 +22,21 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-
-    if (listSize == arrayCapacity){
+    if(listSize == arrayCapacity){
         return;
     }
-
     for(int i = listSize; i > 0; i--){
-        aList[i].setObjPos(aList[i-1]); //shuffle to tail
+        aList[i].setObjPos(aList[i-1]);
     }
 
     aList[0].setObjPos(thisPos);
-    listSize++;
+
+    listSize++; 
 }
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    if (listSize == arrayCapacity){
+    if(listSize == arrayCapacity){
         return;
     }
 
@@ -48,16 +46,14 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 void objPosArrayList::removeHead()
 {
-    for (int i = 0; i < listSize-1; i++){
+    for(int i = 0; i < listSize - 1; i++){
         aList[i].setObjPos(aList[i+1]);
     }
-
-    listSize--; 
+    listSize--;
 }
 
 void objPosArrayList::removeTail()
 {
-    //delete aList[listSize-1];
     listSize--;
 }
 
