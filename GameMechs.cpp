@@ -1,5 +1,6 @@
 #include "GameMechs.h"
 #include "MacUiLib.h"
+#include "objPosArrayList.h"
 
 GameMechs::GameMechs()
 {
@@ -83,11 +84,12 @@ void GameMechs::incrementScore()
     score++;
 }
 
-void GameMechs::generateFood(objPos blockOff)
+void GameMechs::generateFood(objPosArrayList* blockOff)
 {
     srand ((unsigned) time (NULL));
     int randx, randy;
     bool duplicate;
+    objPos temp;
 
     do {
         duplicate = false;
@@ -95,8 +97,11 @@ void GameMechs::generateFood(objPos blockOff)
         randx = (rand() % (boardSizeX - 2)) + 1;
         randy = (rand() % (boardSizeY - 2)) + 1;
 
-        if (randx == blockOff.x && randy == blockOff.y) {
-            duplicate = true;
+        for (int i = 0; i < blockOff->getSize(); i++){
+            blockOff->getElement(temp, i);
+            if (randx == temp.x && randy == temp.y){
+                duplicate = true;
+            }
         }
 
             if (randx == foodPos.x && randy == foodPos.y) {

@@ -124,7 +124,7 @@ bool Player::checkFoodConsumption(objPos& head){
     
     if (head.x == foodPosTemp.x && head.y == foodPosTemp.y){
         mainGameMechsRef->incrementScore();
-        mainGameMechsRef->generateFood(head);
+        mainGameMechsRef->generateFood(playerPosList);
         return true;
     }
     else{
@@ -135,7 +135,7 @@ bool Player::checkFoodConsumption(objPos& head){
 }
 
 void Player::increasePlayerLength(objPos& head){
-    playerPosList->insertHead(head);
+    playerPosList->insertTail(head);
 
 }
 

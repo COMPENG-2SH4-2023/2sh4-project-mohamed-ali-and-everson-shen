@@ -50,7 +50,7 @@ void Initialize(void)
     myPlayer = new Player(myGM);
     objPos tempPos(-1,-1, 'o'); // change later
     //myPlayer->getPlayerPos(tempPos);
-    myGM->generateFood(tempPos);
+    myGM->generateFood(myPlayer->getPlayerPos());
     
 }
 
@@ -117,6 +117,7 @@ void DrawScreen(void)
 
     // MacUILib_printf("BoardSize: %d%d, Player Pos: <%d, %d> + %c\n", myGM->getBoardSizeX(), myGM->getBoardSizeY(), tempPos.x, tempPos.y, tempPos.symbol);
     // MacUILib_printf("Food Pos: <%d, %d> + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
+    MacUILib_printf("Score: %d \n", myGM->getScore());
 }
 
 
