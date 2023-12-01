@@ -105,8 +105,8 @@ void Player::movePlayer()
         currentHead.y = 1;
     }
 
-    playerPosList->insertHead(currentHead);
-    //increasePlayerLength(currentHead);
+    //playerPosList->insertHead(currentHead);
+    increasePlayerLength(currentHead);
 
     if (!checkFoodConsumption()){
         playerPosList->removeTail();
@@ -141,7 +141,7 @@ void Player::increasePlayerLength(objPos head){
     // objPos head;
     // playerPosList->getHeadElement(head);
     
-    playerPosList->insertTail(head);
+    playerPosList->insertHead(head);
 
 }
 
