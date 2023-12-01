@@ -74,10 +74,8 @@ void Player::movePlayer()
     objPos currentHead;
     playerPosList->getHeadElement(currentHead);
     
-
     switch(myDir) {
         case UP:
-
             currentHead.y--;
             break;
         case DOWN:
@@ -107,8 +105,8 @@ void Player::movePlayer()
         currentHead.y = 1;
     }
 
-    //playerPosList->insertHead(currentHead);
-    increasePlayerLength(currentHead);
+    playerPosList->insertHead(currentHead);
+    //increasePlayerLength(currentHead);
 
     if (!checkFoodConsumption()){
         playerPosList->removeTail();
