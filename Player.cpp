@@ -120,6 +120,7 @@ void Player::movePlayer()
 
 
 bool Player::checkFoodConsumption(){
+    objPosArrayList* foodbucket=mainGameMechsRef->getFoodList();
     objPos foodPosTemp;
     objPos head;
     mainGameMechsRef->getFoodPos(foodPosTemp);

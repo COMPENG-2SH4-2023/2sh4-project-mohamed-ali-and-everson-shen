@@ -26,10 +26,13 @@ class GameMechs
         int boardSizeY;
         bool loseFlag;
         int score;
-        objPos foodPos;     
+        objPos foodPos;   
+        objPosArrayList* foodBucket;
+
 
     public:
         GameMechs();
+        ~GameMechs();
         GameMechs(int boardX, int boardY);
         
         bool getExitFlagStatus();
@@ -47,6 +50,8 @@ class GameMechs
         void incrementScore();
         void generateFood(objPosArrayList* blockOff); //upgrade somehow
         void getFoodPos(objPos &returnPos);
+        void clearFood();
+        objPosArrayList* getFoodList();
 
 };
 

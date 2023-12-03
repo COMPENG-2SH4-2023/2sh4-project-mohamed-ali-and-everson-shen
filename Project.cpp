@@ -72,11 +72,13 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
+
     MacUILib_clearScreen();    
     
     bool drawStatus;
 
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPosArrayList* foodBucket = myGM-> getFoodList();
     objPos tempBody;
     if(myGM->getLoseFlagStatus()){
         MacUILib_printf("\nYou lose, your score was: %d\n", myGM->getScore());
@@ -84,6 +86,7 @@ void DrawScreen(void)
     }
     else{
         objPos foodPos;
+        objPos tempFood;
         myGM->getFoodPos(foodPos);
 
         for (int row = 0; row < myGM->getBoardSizeY(); row++){
@@ -97,6 +100,15 @@ void DrawScreen(void)
                         drawStatus = true;
                         break;
                     }
+                for (int j = 0; j < foodBucket->getSize(); j++){
+                    foodBucket->getElement(tempFood, j);
+                    if (tempFood.x == col && tempFood.y == row){
+                        MacUILib_printf("%c", tempFood.symbol);
+                        drawStatus = true;
+                        break;
+                    }
+                }
+ 
                 }
 
                 if(drawStatus) continue;

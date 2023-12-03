@@ -1,41 +1,35 @@
 #include "GameMechs.h"
 #include "MacUiLib.h"
 #include "objPosArrayList.h"
+#include <iostream>
 
 GameMechs::GameMechs()
+    : boardSizeX(30), boardSizeY(15), exitFlag(false), loseFlag(false), score(0)
 {
-boardSizeX=30;
-boardSizeY=15;
-exitFlag=false;
-loseFlag=false;
-score=0;
-clearInput();
+    clearInput();
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
+    : boardSizeX(boardX), boardSizeY(boardY), exitFlag(false), loseFlag(false), score(0)
 {
-boardSizeX=boardX;
-boardSizeY=boardY;
-exitFlag=false;
-loseFlag=false;
-score=0;
-objPos foodPos;
-clearInput();
+    clearInput();
+    foodBucket = new objPosArrayList;
 }
 
-
-// do you need a destructor?
+GameMechs::~GameMechs()
+{
+    delete foodBucket;
+}
 
 bool GameMechs::getExitFlagStatus()
 {
-return exitFlag;
+    return exitFlag;
 }
 
 bool GameMechs::getLoseFlagStatus()
 {
-return loseFlag;
+    return loseFlag;
 }
-
 
 char GameMechs::getInput()
 {
@@ -52,26 +46,24 @@ int GameMechs::getBoardSizeY()
     return boardSizeY;
 }
 
-
 void GameMechs::setExitTrue()
 {
-    exitFlag=true;
+    exitFlag = true;
 }
 
 void GameMechs::setLoseFlag()
 {
-    loseFlag=true;
+    loseFlag = true;
 }
-
 
 void GameMechs::setInput(char this_input)
 {
-    input=this_input;
+    input = this_input;
 }
 
 void GameMechs::clearInput()
 {
-    input=0;
+    input = 0;
 }
 
 int GameMechs::getScore()
@@ -86,36 +78,65 @@ void GameMechs::incrementScore()
 
 void GameMechs::generateFood(objPosArrayList* blockOff)
 {
-    srand ((unsigned) time (NULL));
+    srand((unsigned)time(NULL));
     int randx, randy;
     bool duplicate;
     objPos temp;
+    bool specialFlag;
+    int foodCount = 0;
 
-    do {
-        duplicate = false;
+    while (foodCount < 3)
+    {
+        specialFlag = (foodCount == 0);
+        do
+        {
+            duplicate = false;
+            randx = (rand() % (boardSizeX - 2)) + 1;
+            randy = (rand() % (boardSizeY - 2)) + 1;
 
-        randx = (rand() % (boardSizeX - 2)) + 1;
-        randy = (rand() % (boardSizeY - 2)) + 1;
+            for (int i = 0; i < blockOff->getSize(); i++)
+            {
+                blockOff->getElement(temp, i);
+                if (randx == temp.x && randy == temp.y)
+                {
+                    duplicate = true;
+                    break;
+                }
+            }
 
-        for (int i = 0; i < blockOff->getSize(); i++){
-            blockOff->getElement(temp, i);
-            if (randx == temp.x && randy == temp.y){
+            if (randx == foodPos.x && randy == foodPos.y)
+            {
                 duplicate = true;
             }
+        } while (duplicate);
+
+        if (specialFlag)
+        {
+            foodPos.setObjPos(randx, randy, 'X');
+        }
+        else
+        {
+            foodPos.setObjPos(randx, randy, 'o');
         }
 
-            if (randx == foodPos.x && randy == foodPos.y) {
-                duplicate = true;
-                break;
-            }
-    } while (duplicate);
-
-    foodPos.setObjPos(randx, randy, 'o');
-
+        foodCount++;
+        foodBucket->insertTail(foodPos);
+        
+    }
 }
-
 
 void GameMechs::getFoodPos(objPos &returnPos)
 {
-    returnPos.setObjPos(foodPos.x,foodPos.y,foodPos.symbol);
+    returnPos.setObjPos(foodPos.x, foodPos.y, foodPos.symbol);
+}
+
+ objPosArrayList* GameMechs::getFoodList()
+{
+    return (foodBucket);
+}
+
+void GameMechs::clearFood(){
+    while(foodBucket->getSize() != 0){
+        foodBucket->removeTail();
+    }
 }
