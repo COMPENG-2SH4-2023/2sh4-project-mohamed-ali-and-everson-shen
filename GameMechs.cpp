@@ -4,14 +4,23 @@
 #include <iostream>
 
 GameMechs::GameMechs()
-    : boardSizeX(30), boardSizeY(15), exitFlag(false), loseFlag(false), score(0)
 {
+    boardSizeX = 30;
+    boardSizeY = 15;
+    exitFlag = false;
+    loseFlag = false;
+    score = 0;
     clearInput();
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
-    : boardSizeX(boardX), boardSizeY(boardY), exitFlag(false), loseFlag(false), score(0)
+   
 {
+    boardSizeX =boardX; 
+    boardSizeY = boardY; 
+    exitFlag = false; 
+    loseFlag = false; 
+    score = 0;
     clearInput();
     foodBucket = new objPosArrayList;
 }
@@ -104,10 +113,13 @@ void GameMechs::generateFood(objPosArrayList* blockOff)
                 }
             }
 
-            if (randx == foodPos.x && randy == foodPos.y)
-            {
-                duplicate = true;
-            }
+            for (int x = 0; x < foodCount; x++){
+                blockOff->getElement(temp, x);
+                    if (randx == temp.x && randy == temp.y)
+                    {
+                        duplicate = true;
+                    }
+                }
         } while (duplicate);
 
         if (specialFlag)

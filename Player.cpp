@@ -116,24 +116,38 @@ void Player::movePlayer()
         mainGameMechsRef->setLoseFlag();   
         mainGameMechsRef->setExitTrue(); 
     }
+    if (checkDeathFood()){
+        mainGameMechsRef->setLoseFlag();   
+        mainGameMechsRef->setExitTrue(); 
+    }
 }
 
 
+// void objPosArrayList::getElement(objPos &returnPos, int index)
+// {
+//     returnPos.setObjPos(aList[index]);
+// }
+
 bool Player::checkFoodConsumption(){
-    objPosArrayList* foodbucket=mainGameMechsRef->getFoodList();
+    objPosArrayList* foodbucket = mainGameMechsRef->getFoodList();
     objPos foodPosTemp;
     objPos head;
+    objPos temp;
     mainGameMechsRef->getFoodPos(foodPosTemp);
     playerPosList->getHeadElement(head);
     
-    if (head.x == foodPosTemp.x && head.y == foodPosTemp.y){
-        mainGameMechsRef->incrementScore();
-        mainGameMechsRef->generateFood(playerPosList);
-        return true;
+    for (int i = 0; i < 3; i++){
+        foodbucket->getElement(temp, i);
+            if (head.x == temp.x && head.y == temp.y){
+                mainGameMechsRef->incrementScore();
+                mainGameMechsRef->clearFood();
+                mainGameMechsRef->generateFood(playerPosList);
+                return true;
+            }
     }
-    else{
-        return false;
-    }
+    return false;
+
+    
     
 
 }
@@ -166,3 +180,20 @@ bool Player::checkSelfCollision() {
     return false;
 }
 
+bool Player::checkDeathFood() {
+    objPos death;
+    objPos head;
+    objPosArrayList* foodbucket = mainGameMechsRef->getFoodList();
+    playerPosList->getHeadElement(head);
+
+    for (int m = 0; m < 3; m++){
+        foodbucket->getElement(death, m);
+
+        if ((head.x == death.x && head.y == death.y) && death.symbol == 'X'){
+            return true;
+        }
+    }
+
+    return false;
+    
+}

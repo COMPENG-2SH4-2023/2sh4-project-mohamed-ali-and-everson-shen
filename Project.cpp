@@ -82,8 +82,8 @@ void DrawScreen(void)
     objPos tempBody;
     if(myGM->getLoseFlagStatus()){
         MacUILib_printf("\nYou lose, your score was: %d\n", myGM->getScore());
-
     }
+
     else{
         objPos foodPos;
         objPos tempFood;
@@ -100,6 +100,7 @@ void DrawScreen(void)
                         drawStatus = true;
                         break;
                     }
+                }
                 for (int j = 0; j < foodBucket->getSize(); j++){
                     foodBucket->getElement(tempFood, j);
                     if (tempFood.x == col && tempFood.y == row){
@@ -107,8 +108,7 @@ void DrawScreen(void)
                         drawStatus = true;
                         break;
                     }
-                }
- 
+
                 }
 
                 if(drawStatus) continue;
@@ -117,12 +117,9 @@ void DrawScreen(void)
                 if (row == 0 || col == 0 || row == ((myGM->getBoardSizeY()) - 1) || col == ((myGM->getBoardSizeX())-1)){
                     MacUILib_printf("#");
                 } 
-                // else if ((row == tempPos.y) && (col == tempPos.x)){
-                //     MacUILib_printf("%c", tempPos.symbol);
+                // else if ((row == foodPos.y) && (col == foodPos.x)){
+                //     MacUILib_printf("%c", foodPos.symbol);
                 // }
-                else if ((row == foodPos.y) && (col == foodPos.x)){
-                    MacUILib_printf("%c", foodPos.symbol);
-                }
                 else{
                     MacUILib_printf(" ");
                 }
