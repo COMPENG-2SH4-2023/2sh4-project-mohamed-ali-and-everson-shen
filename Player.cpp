@@ -106,20 +106,26 @@ void Player::movePlayer()
     }
 
     //playerPosList->insertHead(currentHead);
+
     increasePlayerLength(currentHead);
+
+    if (checkDeathFood()){
+        mainGameMechsRef->setLoseFlag();   
+        mainGameMechsRef->setExitTrue(); 
+    }
 
     if (!checkFoodConsumption()){
         playerPosList->removeTail();
     }
+
     
     if (checkSelfCollision()){
         mainGameMechsRef->setLoseFlag();   
         mainGameMechsRef->setExitTrue(); 
     }
-    if (checkDeathFood()){
-        mainGameMechsRef->setLoseFlag();   
-        mainGameMechsRef->setExitTrue(); 
-    }
+
+
+
 }
 
 
@@ -130,19 +136,25 @@ void Player::movePlayer()
 
 bool Player::checkFoodConsumption(){
     objPosArrayList* foodbucket = mainGameMechsRef->getFoodList();
-    objPos foodPosTemp;
+
     objPos head;
     objPos temp;
-    mainGameMechsRef->getFoodPos(foodPosTemp);
+    
     playerPosList->getHeadElement(head);
     
     for (int i = 0; i < 3; i++){
         foodbucket->getElement(temp, i);
             if (head.x == temp.x && head.y == temp.y){
+                // if (temp.symbol == 'X'){
+                //     mainGameMechsRef->setLoseFlag();   
+                //     mainGameMechsRef->setExitTrue(); 
+                // }
+                // else{
                 mainGameMechsRef->incrementScore();
                 mainGameMechsRef->clearFood();
                 mainGameMechsRef->generateFood(playerPosList);
                 return true;
+                //}
             }
     }
     return false;
@@ -189,7 +201,7 @@ bool Player::checkDeathFood() {
     for (int m = 0; m < 3; m++){
         foodbucket->getElement(death, m);
 
-        if ((head.x == death.x && head.y == death.y) && death.symbol == 'X'){
+        if (head.x == death.x && head.y == death.y && death.symbol == 'X'){
             return true;
         }
     }
